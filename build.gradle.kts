@@ -6,7 +6,7 @@ buildscript {
         maven { url = uri("https://jitpack.io") }
     }
     dependencies {
-        classpath ("com.android.tools.build:gradle:4.0.0")
+        classpath ("com.android.tools.build:gradle:4.0.2")
         classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlinVersion}")
 
         // NOTE: Do not place your application dependencies here; they belong
