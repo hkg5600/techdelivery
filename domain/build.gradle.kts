@@ -27,4 +27,5 @@ dependencies {
     implementation( Dependencies.kotlin)
     testImplementation (Dependencies.junit)
 
+    implementation(Dependencies.coroutine)
 }

@@ -7,4 +7,9 @@ object Dependencies {
     const val appcompat = "androidx.appcompat:appcompat:1.2.0"
     const val core_ktx = "androidx.core:core-ktx:1.3.2"
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Version.kotlinVersion}"
+
+    const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
+    const val coroutine_viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    const val coroutine_lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+    const val coroutine_livedata = "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 }

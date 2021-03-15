@@ -40,4 +40,8 @@ dependencies {
     androidTestImplementation (Dependencies.android_junit)
     androidTestImplementation (Dependencies.test_espresso)
 
+    implementation(Dependencies.coroutine_viewmodel)
+    implementation(Dependencies.coroutine_lifecycle)
+    implementation(Dependencies.coroutine_livedata)
+    implementation(Dependencies.coroutine)
 }
