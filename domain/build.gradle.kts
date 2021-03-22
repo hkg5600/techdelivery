@@ -1,7 +1,6 @@
 plugins {
     id ("com.android.library")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
 }
@@ -37,4 +36,8 @@ dependencies {
 
     implementation (Dependencies.hilt_android)
     kapt (Dependencies.hilt_compiler)
+
+    implementation (platform(Dependencies.firebase_bom))
+    implementation(Dependencies.firebase_analytics)
+
 }

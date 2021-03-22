@@ -1,9 +1,9 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
     id("kotlin-android")
 }
 
@@ -52,8 +52,7 @@ dependencies {
     implementation (Dependencies.core_ktx)
     implementation (Dependencies.appcompat)
     implementation (Dependencies.constraintlayout)
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation(Dependencies.material)
     testImplementation (Dependencies.junit)
     androidTestImplementation (Dependencies.android_junit)
     androidTestImplementation (Dependencies.test_espresso)
@@ -72,4 +71,8 @@ dependencies {
     implementation (Dependencies.hilt_viewmodel)
     kapt (Dependencies.hilt_androidx_compiler)
     kapt (Dependencies.hilt_compiler)
+
+    implementation (platform(Dependencies.firebase_bom))
+    implementation(Dependencies.firebase_analytics)
+    implementation(Dependencies.firebase_auth)
 }
