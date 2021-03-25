@@ -17,7 +17,7 @@ class LoadSessionStateAndRefreshTokenUseCase @Inject constructor(
     override fun executeFlow(parameter: Unit): Flow<Result<SessionState>> {
         return flow {
             emit(Result.Loading)
-            // Check firebase auth already logged in
+            // Check firebase auth user state
             sessionRepository.loadSessionState().map { sessionState ->
                 // If SessionState is LOGOUT, emit LOGOUT so that user can enter LoginActivity
                 if (sessionState == SessionState.LOGOUT) {
