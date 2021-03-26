@@ -5,16 +5,13 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.lifecycleScope
-import com.example.data.session.FirebaseUserSession
-import com.example.domain.session.LogoutUseCase
+import com.example.core.data.session.FirebaseUserSession
 import com.example.techdelivery.R
 import com.example.techdelivery.databinding.ActivityLoginBinding
 import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -24,16 +21,11 @@ class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by viewModels()
 
-    @Inject lateinit var test : FirebaseUserSession
-    @Inject lateinit var usecase : LogoutUseCase
+    @Inject lateinit var test : com.example.core.data.session.FirebaseUserSession
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-        lifecycleScope.launchWhenResumed {
-            usecase(Unit).collect {
-                it
-            }
-        }
+       test()
         //Todo Add Github Login
     }
 

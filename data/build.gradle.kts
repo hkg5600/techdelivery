@@ -20,6 +20,11 @@ android {
         targetCompatibility =  JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        val options = this as org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+        options.jvmTarget = "1.8"
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false

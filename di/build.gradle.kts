@@ -12,6 +12,7 @@ android {
     defaultConfig {
         minSdkVersion (24)
         targetSdkVersion (30)
+
     }
 
     compileOptions {
@@ -33,10 +34,17 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":domain"))
+    implementation(project(":data"))
     implementation (fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
     implementation( Dependencies.kotlin)
+    implementation (Dependencies.core_ktx)
+    implementation (Dependencies.appcompat)
+    implementation (Dependencies.constraintlayout)
     testImplementation (Dependencies.junit)
+    androidTestImplementation (Dependencies.android_junit)
+    androidTestImplementation (Dependencies.test_espresso)
 
     implementation(Dependencies.coroutine)
 
@@ -45,5 +53,10 @@ dependencies {
 
     implementation (platform(Dependencies.firebase_bom))
     implementation(Dependencies.firebase_analytics)
+    implementation(Dependencies.firebase_auth)
 
+    implementation(Dependencies.gson_converter)
+    implementation(Dependencies.retrofit2)
+
+    implementation(Dependencies.datastore)
 }
