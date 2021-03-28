@@ -45,9 +45,7 @@ class DefaultSessionRepository @Inject constructor(
                     is Result.Success -> Result.Success(result.data.createToken())
                     is Result.Error -> Result.Error(result.exception)
                 }
-
             }
-
         }
     }
 
