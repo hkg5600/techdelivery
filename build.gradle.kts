@@ -8,7 +8,7 @@ buildscript {
         maven { url = uri("https://jitpack.io") }
     }
     dependencies {
-        classpath ("com.android.tools.build:gradle:4.0.2")
+        classpath ("com.android.tools.build:gradle:4.1.3")
         classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlinVersion}")
         classpath ("com.google.dagger:hilt-android-gradle-plugin:2.28-alpha")
         classpath ("com.google.gms:google-services:4.3.5")

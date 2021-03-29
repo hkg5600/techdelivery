@@ -1,10 +1,10 @@
 package com.example.techdelivery.login
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.core.utils.EventObserver
 import com.example.techdelivery.R
 import com.example.techdelivery.databinding.ActivityLoginBinding
 import com.google.android.material.snackbar.Snackbar
@@ -29,13 +29,17 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
         viewModel.reLogin.observe(this, {
             if (it) {
                 firebaseReLogin()
-            } else {
-                firebaseLogin()
             }
+        })
+
+        viewModel.startLoginFlow.observe(this, EventObserver {
+            firebaseLogin(it)
         })
 
     }
@@ -43,32 +47,55 @@ class LoginActivity : AppCompatActivity() {
     private fun firebaseReLogin() {
         val firebaseUser: FirebaseUser? = firebaseAuth.currentUser
         val provider = OAuthProvider.newBuilder("github.com")
+
+        if (firebaseUser == null) {
+            showErrorSnackbar("기존 로그인 정보를 불러오는데 실패했습니다.")
+        }
+
         firebaseUser
             ?.startActivityForReauthenticateWithProvider(this, provider.build())
             ?.addOnSuccessListener {
-               it.user?.getIdToken(true)?.addOnSuccessListener {  tokenResult ->
-                   tokenResult.token //Login with this token
-               }
+                it.user?.getIdToken(true)?.addOnSuccessListener { tokenResult ->
+                    login(tokenResult.token)
+                }
             }
             ?.addOnFailureListener {
-                Snackbar.make(binding.holderLayout, "기존 로그인 정보를 불러오는데 실패했습니다.", Snackbar.LENGTH_SHORT).show()
+                showErrorSnackbar("기존 로그인 정보를 불러오는데 실패했습니다.")
             }
     }
 
-    private fun firebaseLogin() {
-        val provider = OAuthProvider.newBuilder("github.com")
-        provider.addCustomParameter("login", "hkg5600@gmail.com");
-        val firebaseAuth = Firebase.auth
-        firebaseAuth
+    private fun firebaseLogin(email: String) {
+        val provider = OAuthProvider.newBuilder("github.com").apply {
+            addCustomParameter("login", email)
+        }
+
+        Firebase.auth
             .startActivityForSignInWithProvider( /* activity= */this, provider.build())
             .addOnSuccessListener {
                 it.user?.getIdToken(true)?.addOnSuccessListener { tokenResult ->
-                   tokenResult.token  //Login with this token
+                    login(tokenResult.token)
                 }
             }
             .addOnFailureListener {
-                Snackbar.make(binding.holderLayout, "로그인에 실패했습니다.", Snackbar.LENGTH_SHORT).show()
+                showErrorSnackbar("깃허브 연동에 실패하였습니다.")
             }
+    }
+
+    private fun login(token: String?) {
+        if (token.isNullOrBlank()) {
+            showErrorSnackbar("깃허브 연동에 실패하였습니다.")
+            return
+        }
+
+        viewModel.login(token)  //Login with this token
+    }
+
+    private fun showErrorSnackbar(message: String) {
+        Snackbar.make(
+            binding.holderLayout,
+            message,
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
 }

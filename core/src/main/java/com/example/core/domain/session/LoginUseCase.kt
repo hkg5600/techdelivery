@@ -1,8 +1,6 @@
 package com.example.core.domain.session
 
 import com.example.core.IoDispatcher
-import com.example.core.data.session.model.GithubLoginResponse
-import com.example.core.domain.session.model.LoginResult
 import com.example.core.domain.session.model.Member
 import com.example.core.utils.FlowUseCase
 import com.example.core.utils.Result

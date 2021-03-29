@@ -34,8 +34,7 @@ class SplashViewModel @ViewModelInject constructor(
                 when (it) {
                     is Result.Success -> verifySessionState(it.data)
                     is Result.Error -> _error.value = Event(Unit)
-                    Result.Loading -> { //Todo add somthing }
-                    }
+                    Result.Loading -> {}//Todo add somthing
                 }
             }
 

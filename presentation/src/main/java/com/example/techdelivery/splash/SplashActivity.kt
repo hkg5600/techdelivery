@@ -57,9 +57,5 @@ class SplashActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         })
-
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 }
