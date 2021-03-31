@@ -66,6 +66,7 @@ class LoginActivity : AppCompatActivity() {
 
         if (firebaseUser == null) {
             showSnackbar("기존 로그인 정보를 불러오는데 실패했습니다.", Snackbar.LENGTH_SHORT)
+            return
         }
 
         firebaseUser
