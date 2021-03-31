@@ -5,16 +5,16 @@ import com.example.core.utils.Result
 
 fun <T> Response<BaseResponse<T>>.verify(): Result<T> {
     if (!this.isSuccessful) {
-        throw Exception("${this.code()}")
+        return Result.Error(Exception("${this.code()}"))
     }
 
-    when (this.body()?.status) {
+    return when (this.body()?.status) {
         in 200..299 -> {
             val body = this.body()?.data
-            return if (body == null) Result.Error(Exception("Find no body")) else Result.Success(body)
+            if (body == null) Result.Error(Exception("Find no body")) else Result.Success(body)
         }
         else -> {
-            throw Exception("${this.body()?.status}")
+            Result.Error(Exception("${this.body()?.status}"))
         }
     }
 
@@ -22,16 +22,16 @@ fun <T> Response<BaseResponse<T>>.verify(): Result<T> {
 
 fun <T> Response<BaseMessageResponse>.verifyMessage(): Result<String> {
     if (!this.isSuccessful) {
-        throw Exception("${this.code()}")
+        return Result.Error(Exception("${this.code()}"))
     }
 
-    when (this.body()?.status) {
+    return when (this.body()?.status) {
         in 200..299 -> {
             val message = this.body()?.message
-            return if (message == null) Result.Error(Exception("Find no message")) else Result.Success(message)
+            if (message == null) Result.Error(Exception("Find no message")) else Result.Success(message)
         }
         else -> {
-            throw Exception("${this.body()?.status}")
+            Result.Error(Exception("${this.body()?.status}"))
         }
     }
 

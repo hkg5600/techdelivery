@@ -1,5 +1,6 @@
 package com.example.techdelivery.login
 
+import android.util.Patterns
 import androidx.databinding.Observable
 import androidx.databinding.ObservableField
 import androidx.hilt.Assisted
@@ -8,9 +9,11 @@ import androidx.lifecycle.*
 import com.example.core.domain.session.LoginUseCase
 import com.example.core.utils.Event
 import com.example.core.utils.Result
+import com.example.core.utils.execute
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
+import java.util.regex.Pattern
 
 class LoginViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle,
@@ -43,7 +46,7 @@ class LoginViewModel @ViewModelInject constructor(
 
     private val emailChangeCallback = object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-            _loginButtonEnabled.value = !email.get().isNullOrBlank()
+            _loginButtonEnabled.value =   Patterns.EMAIL_ADDRESS.matcher(email.get() ?: "").matches()
         }
     }
 
@@ -57,14 +60,14 @@ class LoginViewModel @ViewModelInject constructor(
 
     fun login(token: String) {
         viewModelScope.launch {
-            _loading.value = false
-            loginUseCase(token).collect {
+            _loading.value = true
+            loginUseCase(token).execute {
                 when (it) {
                     is Result.Success -> navigateToMain()
                     is Result.Error -> _loginError.value = Event(it.exception.message ?: "Unknown")
-                    is Result.Loading -> _loading.value = true
                 }
             }
+            _loading.value = false
         }
     }
 

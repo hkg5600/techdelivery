@@ -53,8 +53,8 @@ class LoginActivity : AppCompatActivity() {
             showSnackbar("로그인 중 에러가 발생하였습니다. (code : $it)", Snackbar.LENGTH_SHORT)
         })
 
-        viewModel.loading.observe(this) {
-            if (!it) return@observe
+        viewModel.loading.observe(this) { isLoading ->
+            if (!isLoading) return@observe
             showSnackbar("로그인 중...", Snackbar.LENGTH_INDEFINITE)
         }
 

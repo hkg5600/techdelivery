@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface SessionRepository {
 
-    fun login(token: String) : Flow<Result<LoginResult>>
-    fun logout() : Flow<Unit>
-    fun loadSessionState() : Flow<SessionState>
-    fun refreshToken(): Flow<Result<Token>>
-    fun saveToken(token: Token) : Flow<Result<Unit>>
-    fun saveRefreshToken(token: RefreshToken) : Flow<Result<Unit>>
+    suspend fun login(token: String) : Result<LoginResult>
+    suspend fun logout() : Flow<Unit>
+    fun loadSessionState() : SessionState
+    suspend fun refreshToken(): Result<Token>
+    suspend fun saveToken(token: Token) : Result<Unit>
+    suspend fun saveRefreshToken(token: RefreshToken) : Result<Unit>
 
 }

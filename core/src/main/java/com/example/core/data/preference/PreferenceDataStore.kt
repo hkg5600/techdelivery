@@ -24,24 +24,24 @@ class PreferenceDataStore @Inject constructor(
 
     private val tokenStore: DataStore<Preferences> by lazy { context.createDataStore(name = TOKEN_STORE) }
 
-    fun saveToken(token: Token): Flow<Result<Unit>> {
-        return flow {
-            val tokenPreferences = preferencesKey<String>(TOKEN_VALUE)
-            tokenStore.edit {
-                it[tokenPreferences] = token.token
-            }
-            emit(Result.Success(Unit))
+    suspend fun saveToken(token: Token): Result<Unit> {
+
+        val tokenPreferences = preferencesKey<String>(TOKEN_VALUE)
+        tokenStore.edit {
+            it[tokenPreferences] = token.token
         }
+        return Result.Success(Unit)
+
     }
 
-    fun saveRefreshToken(token: RefreshToken): Flow<Result<Unit>> {
-        return flow {
-            val tokenPreferences = preferencesKey<String>(REFRESH_TOKEN_VALUE)
-            tokenStore.edit {
-                it[tokenPreferences] = token.token
-            }
-            emit(Result.Success(Unit))
+    suspend fun saveRefreshToken(token: RefreshToken): Result<Unit> {
+
+        val tokenPreferences = preferencesKey<String>(REFRESH_TOKEN_VALUE)
+        tokenStore.edit {
+            it[tokenPreferences] = token.token
         }
+        return Result.Success(Unit)
+
     }
 
     fun loadToken(): Flow<String?> {

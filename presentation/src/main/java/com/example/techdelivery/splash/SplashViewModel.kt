@@ -9,6 +9,7 @@ import com.example.core.domain.session.LoadSessionStateAndRefreshTokenUseCase
 import com.example.core.domain.session.SessionState
 import com.example.core.utils.Event
 import com.example.core.utils.Result
+import com.example.core.utils.execute
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -30,11 +31,10 @@ class SplashViewModel @ViewModelInject constructor(
 
     init {
         viewModelScope.launch {
-            loadSessionStateAndRefreshTokenUseCase(Unit).collect {
+            loadSessionStateAndRefreshTokenUseCase(Unit).execute {
                 when (it) {
                     is Result.Success -> verifySessionState(it.data)
                     is Result.Error -> _error.value = Event(Unit)
-                    Result.Loading -> {}//Todo add somthing
                 }
             }
 

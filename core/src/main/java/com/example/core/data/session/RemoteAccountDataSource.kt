@@ -16,20 +16,15 @@ class RemoteAccountDataSource @Inject constructor(
     private val userService: UserService
 ) {
 
-    fun login(code: String) : Flow<Result<GithubLoginResponse>> {
-        return flow {
-            val loginResult = userService.loginWithGithub(createGithubLoginPayload(code))
-            emit(loginResult.verify())
-        }
+    suspend fun login(code: String): Result<GithubLoginResponse> {
+        val loginResult = userService.loginWithGithub(createGithubLoginPayload(code))
+        return loginResult.verify()
     }
 
 
-    fun refreshToken(token: Token) : Flow<Result<RefreshTokenResponse>> {
-        return flow {
-            emit(Result.Loading)
-            val refreshTokenResponse = userService.refreshToken(createRefreshTokenPayload(token))
-            emit(refreshTokenResponse.verify())
-        }
+    suspend fun refreshToken(token: Token): Result<RefreshTokenResponse> {
+        val refreshTokenResponse = userService.refreshToken(createRefreshTokenPayload(token))
+        return refreshTokenResponse.verify()
     }
 
     private fun createGithubLoginPayload(code: String) = GithubLoginPayload(code)

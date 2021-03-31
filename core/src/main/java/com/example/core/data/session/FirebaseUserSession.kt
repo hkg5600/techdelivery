@@ -15,11 +15,11 @@ class FirebaseUserSession @Inject constructor(
         emit(firebaseAuth.signOut())
     }
 
-    fun loadSessionState() : Flow<SessionState> = flow {
-        if (firebaseAuth.currentUser == null) { // currentUser == null means that user never logged in or logged out
-            emit(SessionState.LOGOUT)
+    fun loadSessionState() : SessionState {
+        return if (firebaseAuth.currentUser == null) { // currentUser == null means that user never logged in or logged out
+            SessionState.LOGOUT
         } else {
-            emit(SessionState.LOGIN)
+            SessionState.LOGIN
         }
     }
 

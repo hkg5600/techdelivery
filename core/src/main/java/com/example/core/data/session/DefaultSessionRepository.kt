@@ -6,7 +6,7 @@ import com.example.core.domain.session.model.LoginResult
 import com.example.core.domain.session.model.RefreshToken
 import com.example.core.domain.session.model.Token
 import com.example.core.utils.Result
-import kotlinx.coroutines.FlowPreview
+import com.example.core.utils.convert
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -16,32 +16,29 @@ class DefaultSessionRepository @Inject constructor(
     private val cacheAccountDataSource: CacheAccountDataSource
 ) : SessionRepository {
 
-    override fun login(token: String): Flow<Result<LoginResult>> {
-        return remoteAccountDataSource.login(token).map {
+    override suspend fun login(token: String): Result<LoginResult> {
+        return remoteAccountDataSource.login(token).convert {
             when (it) {
                 is Result.Success -> Result.Success(it.data.toDomain())
                 is Result.Error -> Result.Error(it.exception)
-                is Result.Loading -> Result.Loading
             }
         }
     }
 
-    override fun logout(): Flow<Unit> {
+    override suspend fun logout(): Flow<Unit> {
         return userSession.logout()
     }
 
-    override fun loadSessionState(): Flow<SessionState> {
+    override fun loadSessionState(): SessionState {
         return userSession.loadSessionState()
     }
 
-    @FlowPreview
-    override fun refreshToken(): Flow<Result<Token>> {
+    override suspend fun refreshToken(): Result<Token> {
         // Load token from local
-        return cacheAccountDataSource.loadToken().flatMapConcat { token ->
+        return cacheAccountDataSource.loadRefreshToken().convert { token ->
             // If token is null, just make Token instance with empty string and pass it to refreshToken func. And it will fail on server.
-            remoteAccountDataSource.refreshToken(Token(token ?: "")).map { result ->
+            remoteAccountDataSource.refreshToken(Token(token ?: "")).convert { result ->
                 when (result) {
-                    is Result.Loading -> Result.Loading
                     is Result.Success -> Result.Success(result.data.createToken())
                     is Result.Error -> Result.Error(result.exception)
                 }
@@ -49,11 +46,11 @@ class DefaultSessionRepository @Inject constructor(
         }
     }
 
-    override fun saveToken(token: Token): Flow<Result<Unit>> {
+    override suspend fun saveToken(token: Token): Result<Unit> {
         return cacheAccountDataSource.saveToken(token)
     }
 
-    override fun saveRefreshToken(token: RefreshToken): Flow<Result<Unit>> {
+    override suspend fun saveRefreshToken(token: RefreshToken): Result<Unit> {
         return cacheAccountDataSource.saveRefreshToken(token)
     }
 

@@ -1,6 +1,6 @@
 package com.example.core.domain.session
 
-import com.example.core.utils.FlowUseCase
+import com.example.core.utils.UseCase
 import com.example.core.IoDispatcher
 import com.example.core.utils.Result
 import kotlinx.coroutines.CoroutineDispatcher
@@ -11,11 +11,8 @@ import javax.inject.Inject
 class LogoutUseCase @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
     private val repository: SessionRepository
-) : FlowUseCase<Unit, Unit>(coroutineDispatcher) {
-    override fun executeFlow(parameter: Unit): Flow<Result<Unit>> {
-        return flow {
-            repository.logout()
-            emit(Result.Success(Unit))
-        }
+) : UseCase<Unit, Unit>(coroutineDispatcher) {
+    override suspend fun execute(parameter: Unit) {
+        repository.logout()
     }
 }
