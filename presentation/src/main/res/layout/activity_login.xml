@@ -47,7 +47,7 @@
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
             android:paddingStart="20dp"
-            android:paddingEnd="20dp"/>
+            android:paddingEnd="40dp"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/button_login"

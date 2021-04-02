@@ -13,9 +13,9 @@ import retrofit2.http.POST
 
 interface UserService {
 
-    @POST("/login/with-github")
+    @POST("/login/with-github/mobile")
     suspend fun loginWithGithub(
-        @Body code: GithubLoginPayload
+        @Body token: GithubLoginPayload
     ) : Response<BaseResponse<GithubLoginResponse>>
 
     @POST("/api/token")

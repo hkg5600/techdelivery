@@ -11,6 +11,7 @@ import com.example.techdelivery.R
 import com.example.techdelivery.databinding.ActivityLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.OAuthCredential
 import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -55,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.loading.observe(this) { isLoading ->
             if (!isLoading) return@observe
-            showSnackbar("로그인 중...", Snackbar.LENGTH_INDEFINITE)
+            //showSnackbar("로그인 중...", Snackbar.LENGTH_INDEFINITE)
         }
 
     }
@@ -70,13 +71,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         firebaseUser
-            ?.startActivityForReauthenticateWithProvider(this, provider.build())
-            ?.addOnSuccessListener {
-                it.user?.getIdToken(true)?.addOnSuccessListener { tokenResult ->
-                    login(tokenResult.token)
-                }
+            .startActivityForReauthenticateWithProvider(this, provider.build())
+            .addOnSuccessListener {
+
+                val credential = it.credential as OAuthCredential
+                
+                login(credential.accessToken)
+
             }
-            ?.addOnFailureListener {
+            .addOnFailureListener {
                 showSnackbar("기존 로그인 정보를 불러오는데 실패했습니다.", Snackbar.LENGTH_SHORT)
             }
     }
