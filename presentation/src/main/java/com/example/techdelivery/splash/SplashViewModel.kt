@@ -1,6 +1,5 @@
 package com.example.techdelivery.splash
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,10 +9,13 @@ import com.example.core.domain.session.SessionState
 import com.example.core.utils.Event
 import com.example.core.utils.Result
 import com.example.core.utils.execute
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SplashViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SplashViewModel @Inject constructor(
     private val loadSessionStateAndRefreshTokenUseCase: LoadSessionStateAndRefreshTokenUseCase,
 ) : ViewModel() {
 

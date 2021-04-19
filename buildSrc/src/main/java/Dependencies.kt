@@ -18,10 +18,9 @@ object Dependencies {
     const val activity_ktx = "androidx.activity:activity-ktx:1.0.0"
     const val fragment_ktx = "androidx.fragment:fragment-ktx:1.2.5"
 
-    const val hilt_android = "com.google.dagger:hilt-android:2.28-alpha"
-    const val hilt_compiler = "com.google.dagger:hilt-android-compiler:2.28-alpha"
-    const val hilt_viewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01"
-    const val hilt_androidx_compiler = "androidx.hilt:hilt-compiler:1.0.0-alpha01"
+    const val hilt_android = "com.google.dagger:hilt-android:2.34.1-beta"
+    const val hilt_compiler = "com.google.dagger:hilt-android-compiler:2.34.1-beta"
+    const val hilt_androidx_compiler = "androidx.hilt:hilt-compiler:1.0.0-alpha03"
 
     const val firebase_bom = "com.google.firebase:firebase-bom:26.7.0"
     const val firebase_analytics = "com.google.firebase:firebase-analytics-ktx"

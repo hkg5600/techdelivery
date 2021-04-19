@@ -23,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
     private val errorDialog by lazy {
        MaterialAlertDialogBuilder(this)
             .setMessage("실행 중 문제가 발생하였습니다.")
-            .setPositiveButton("종료") { dialog, which ->
+            .setPositiveButton("종료") { dialog, _ ->
                 dialog.dismiss()
                 finish()
             }

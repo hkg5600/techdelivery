@@ -68,7 +68,6 @@ dependencies {
     implementation(Dependencies.coroutine)
 
     implementation (Dependencies.hilt_android)
-    implementation (Dependencies.hilt_viewmodel)
     kapt (Dependencies.hilt_androidx_compiler)
     kapt (Dependencies.hilt_compiler)
 

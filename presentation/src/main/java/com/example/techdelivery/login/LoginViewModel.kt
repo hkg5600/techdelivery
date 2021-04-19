@@ -3,20 +3,19 @@ package com.example.techdelivery.login
 import android.util.Patterns
 import androidx.databinding.Observable
 import androidx.databinding.ObservableField
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.core.domain.session.LoginUseCase
 import com.example.core.utils.Event
 import com.example.core.utils.Result
 import com.example.core.utils.execute
-import kotlinx.coroutines.flow.collect
+import dagger.assisted.Assisted
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.*
-import java.util.regex.Pattern
+import javax.inject.Inject
 
-class LoginViewModel @ViewModelInject constructor(
-    @Assisted private val savedStateHandle: SavedStateHandle,
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
 
