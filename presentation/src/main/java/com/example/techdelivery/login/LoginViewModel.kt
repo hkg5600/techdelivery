@@ -23,10 +23,6 @@ class LoginViewModel @Inject constructor(
 
     val email = ObservableField<String>("")
 
-    private val _loginButtonEnabled = MutableLiveData<Boolean>()
-    val loginButtonEnabled : LiveData<Boolean>
-        get() = _loginButtonEnabled
-
     private val _startLoginFlow = MutableLiveData<Event<String>>()
     val startLoginFlow : LiveData<Event<String>>
         get() = _startLoginFlow
@@ -39,22 +35,25 @@ class LoginViewModel @Inject constructor(
     val navigateToMain : LiveData<Event<Unit>>
         get() = _navigateToMain
 
+    private val _emailIsNotValid = MutableLiveData<Event<Unit>>()
+    val emailIsNotValid : LiveData<Event<Unit>>
+        get() = _emailIsNotValid
+
     private val _loading = MutableLiveData<Boolean>(false)
     val loading : LiveData<Boolean>
         get() = _loading
 
-    private val emailChangeCallback = object : Observable.OnPropertyChangedCallback() {
-        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-            _loginButtonEnabled.value =   Patterns.EMAIL_ADDRESS.matcher(email.get() ?: "").matches()
-        }
-    }
-
-    init {
-        email.addOnPropertyChangedCallback(emailChangeCallback)
-    }
-
     fun startLoginFlow() {
-        _startLoginFlow.value = Event(email.get() ?: "")
+        if (checkEmailIsValid()) {
+            _startLoginFlow.value = Event(email.get() ?: "")
+        } else {
+            _emailIsNotValid.value = Event(Unit)
+        }
+
+    }
+
+    private fun checkEmailIsValid(): Boolean {
+       return Patterns.EMAIL_ADDRESS.matcher(email.get() ?: "").matches()
     }
 
     fun login(token: String) {
@@ -74,8 +73,4 @@ class LoginViewModel @Inject constructor(
         _navigateToMain.value = Event(Unit)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        email.removeOnPropertyChangedCallback(emailChangeCallback)
-    }
 }

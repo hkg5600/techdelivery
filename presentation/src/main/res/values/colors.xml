@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#bb86fc</color>
-    <color name="colorPrimaryDark">#1f2021</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="background_default">#121212</color>
-    <color name="error_default">#cf6679</color>
-    <color name="surface_default">#1e1e1e</color>
-    <color name="text_high">#DEFFFFFF</color>
-    <color name="text_medium">#99FFFFFF</color>
-    <color name="text_disable">#61FFFFFF</color>
+    <color name="colorPrimary">#6200ee</color>
+    <color name="colorPrimaryDark">#3700b3</color>
+    <color name="colorAccent">#03DAC6</color>
+    <color name="background_default">#ffffff</color>
+    <color name="error">#b00020</color>
+    <color name="surface">#ffffff</color>
+    <color name="textHigh">#DE000000</color>
+    <color name="textMedium">#99000000</color>
+    <color name="textDisable">#61000000</color>
+    <color name="editTextBackground">#ededed</color>
 </resources>

@@ -2,6 +2,7 @@ package com.example.techdelivery.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo.IME_ACTION_SEND
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -34,6 +35,15 @@ class LoginActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+        binding.editTextEmail.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == IME_ACTION_SEND) {
+                viewModel.startLoginFlow()
+                return@setOnEditorActionListener false
+            }
+
+            return@setOnEditorActionListener true
+        }
+
         viewModel.reLogin.observe(this, {
             if (it) {
                 firebaseReLogin()
@@ -51,7 +61,11 @@ class LoginActivity : AppCompatActivity() {
         })
 
         viewModel.loginError.observe(this, EventObserver {
-            showSnackbar("로그인 중 에러가 발생하였습니다. (code : $it)", Snackbar.LENGTH_SHORT)
+            showSnackbar("로그인 중 오류가 발생하였습니다. (code : $it)", Snackbar.LENGTH_SHORT)
+        })
+
+        viewModel.emailIsNotValid.observe(this, EventObserver {
+            showSnackbar("이메일 형식이 올바르지 않습니다.", Snackbar.LENGTH_SHORT)
         })
 
         viewModel.loading.observe(this) { isLoading ->
