@@ -8,9 +8,9 @@
     <color name="surface">#1e1e1e</color>
     <color name="colorOnPrimary">#FFFFFF</color>
     <color name="colorOnSecondary">#000000</color>
-    <color name="colorOnBackground">#000000</color>
-    <color name="colorOnSurface">#000000</color>
-    <color name="colorOnError">#FFFFFF</color>
+    <color name="colorOnBackground">#ffffff</color>
+    <color name="colorOnSurface">#ffffff</color>
+    <color name="colorOnError">#000000</color>
     <color name="textHigh">#DEFFFFFF</color>
     <color name="textMedium">#99FFFFFF</color>
     <color name="textDisable">#61FFFFFF</color>

@@ -17,7 +17,7 @@ object RetrofitModule {
     @Singleton
     fun provideUserService(): UserService {
         return Retrofit.Builder()
-            .baseUrl("http://13.125.130.198:3000")
+            .baseUrl("http://13.125.130.198:8888")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(UserService::class.java)
