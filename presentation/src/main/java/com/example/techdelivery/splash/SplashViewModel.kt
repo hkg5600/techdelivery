@@ -33,7 +33,7 @@ class SplashViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            loadSessionStateAndRefreshTokenUseCase(Unit).execute {
+            loadSessionStateAndRefreshTokenUseCase(Unit).let {
                 when (it) {
                     is Result.Success -> verifySessionState(it.data)
                     is Result.Error -> _error.value = Event(Unit)
